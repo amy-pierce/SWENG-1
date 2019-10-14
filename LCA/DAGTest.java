@@ -78,6 +78,42 @@ class DAGTest {
 		DAG.addEdge(3, 8);
 		DAG.isAcyclic();
 		assertTrue("Check DAG doesn't have a cycle", DAG.checkDAG);
+		
+		
+		LCA_DAG DAG3 = new LCA_DAG(9);
+		DAG3.isAcyclic();
+		assertTrue("Check empty DAG doesnt have a cycle", DAG3.checkDAG);
+	}
+	
+	
+	@Test 
+	void testContainsCycle() {
+		LCA_DAG DAG = new LCA_DAG(7);
+		DAG.addEdge(1, 3);
+		DAG.addEdge(3, 4);
+		DAG.addEdge(4, 1);
+		DAG.isAcyclic();
+		assertFalse("Check DAG contains a cycle", DAG.checkDAG);
+
+		LCA_DAG DAG2 = new LCA_DAG(9);
+		DAG2.addEdge(3, 6);
+		DAG2.addEdge(3, 4);
+		DAG2.addEdge(6, 2);
+		DAG2.addEdge(1, 3);
+		DAG2.addEdge(1, 2);
+		DAG2.addEdge(8, 4);
+		DAG2.addEdge(2, 3);
+		DAG2.isAcyclic();
+		assertFalse("Check DAG contains a cycle", DAG2.checkDAG);
+
+		
+		LCA_DAG DAG3 = new LCA_DAG(4);
+		DAG3.addEdge(1, 3);
+		DAG3.addEdge(3, 2);
+		DAG3.isAcyclic();
+		assertFalse("Check DAG contains a cycle", DAG3.checkDAG);
+		//purposefully failed test to make sure if no cycle doesn't pass test
+		
 
 	}
 
