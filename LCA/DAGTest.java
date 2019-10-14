@@ -76,6 +76,20 @@ class DAGTest {
 
 	@Test
 	void testLCA() {
+		LCA_DAG empty = new LCA_DAG(200);
+		assertEquals("Testing LCA on empty graph.",empty.LCA(1, 3),-1);
+		
+				LCA_DAG DAG2 = new LCA_DAG(8);
+		DAG2.addEdge(1, 2);
+		DAG2.addEdge(1, 3);
+		DAG2.addEdge(2, 4);
+		DAG2.addEdge(2, 5);
+		DAG2.addEdge(5, 7);
+		DAG2.addEdge(3, 6);
+		assertEquals("Assert LCA(7,3) is 1", DAG2.LCA(7, 3), 1);
+		assertEquals("Assert LCA(5,3) is 2", DAG2.LCA(5, 3), 1);
+		assertEquals("Assert LCA(7,2) is 1", DAG2.LCA(7, 2), 2);
+
 	
 	}
 
