@@ -70,7 +70,14 @@ class DAGTest {
 	}
 
 	@Test
-	void testAcyclic() {
+	void testNoCycle() {
+		LCA_DAG DAG = new LCA_DAG(9);
+		DAG.addEdge(1, 3);
+		DAG.addEdge(3, 4);
+		DAG.addEdge(8, 4);
+		DAG.addEdge(3, 8);
+		DAG.isAcyclic();
+		assertTrue("Check DAG doesn't have a cycle", DAG.checkDAG);
 
 	}
 
