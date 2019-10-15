@@ -8,7 +8,7 @@ class DAGTest {
 
 
 	@Test
-	void testConstructor() {
+	void testConstructor() {// testing constructor works
 		LCA_DAG DAG = new LCA_DAG(6);
 		assertEquals("Testing Constructor", 6, DAG.V());
 		
@@ -17,6 +17,18 @@ class DAGTest {
 		
 		LCA_DAG DAG3 = new LCA_DAG(15);
 		assertEquals("Testing Constructor", 15, DAG3.V());
+		
+		//test to make sure if vertex below 0 entered, exception thrown
+		try {
+			LCA_DAG DAG4 = new LCA_DAG(-1);
+		} 
+		catch (IllegalArgumentException e) {
+		}
+		
+		//test that test is false if expected vertex!=returned vertex
+		LCA_DAG DAG5 = new LCA_DAG(15);
+		assertFalse("Testing Constructor", expectedVertex==DAG5.Vertex());
+		
 
 	}
 	@Test
@@ -44,6 +56,7 @@ class DAGTest {
 		catch (IllegalArgumentException e) {
 		}
 
+		
 		LCA_DAG DAG2 = new LCA_DAG(3);
 		try {
 			DAG2.addEdge(2,2);
@@ -97,7 +110,7 @@ class DAGTest {
 		DAG.isAcyclic();
 		assertTrue("Check DAG doesn't have a cycle", DAG.checkDAG);
 		
-		
+		//test empty DAG doesn't have cycle
 		LCA_DAG DAG3 = new LCA_DAG(9);
 		DAG3.isAcyclic();
 		assertTrue("Check empty DAG doesnt have a cycle", DAG3.checkDAG);
@@ -123,33 +136,46 @@ class DAGTest {
 		DAG2.addEdge(2, 3);
 		DAG2.isAcyclic();
 		assertFalse("Check DAG contains a cycle", DAG2.checkDAG);
-
 		
-		LCA_DAG DAG3 = new LCA_DAG(4);
-		DAG3.addEdge(1, 3);
-		DAG3.addEdge(3, 2);
-		DAG3.isAcyclic();
-		assertFalse("Check DAG contains a cycle", DAG3.checkDAG);
-		//purposefully failed test to make sure if no cycle doesn't pass test
 		
-
 	}
 
 	@Test
 	void testLCA() {
+		//Check LCA on empty graph
 		LCA_DAG empty = new LCA_DAG(200);
 		assertEquals("Testing LCA on empty graph.",empty.LCA(1, 3),-1);
 		
-				LCA_DAG DAG2 = new LCA_DAG(8);
+		//normal check on LCA
+		LCA_DAG DAG2 = new LCA_DAG(8);
 		DAG2.addEdge(1, 2);
 		DAG2.addEdge(1, 3);
 		DAG2.addEdge(2, 4);
 		DAG2.addEdge(2, 5);
 		DAG2.addEdge(5, 7);
 		DAG2.addEdge(3, 6);
-		assertEquals("Assert LCA(7,3) is 1", DAG2.LCA(7, 3), 1);
-		assertEquals("Assert LCA(5,3) is 2", DAG2.LCA(5, 3), 1);
-		assertEquals("Assert LCA(7,2) is 1", DAG2.LCA(7, 2), 2);
+		assertEquals("Check LCA(7,3) is 1", DAG2.LCA(7, 3), 1);
+		assertEquals("Check LCA(5,3) is 2", DAG2.LCA(5, 3), 1);
+		assertEquals("Check LCA(7,2) is 1", DAG2.LCA(7, 2), 2);
+		
+		//try LCA on graph that contains a cycle
+		LCA_DAG DAG3 = new LCA_DAG(8);
+		DAG3.addEdge(2, 3);
+		DAG3.addEdge(3, 4);
+		assertEquals("Check LCA on graph with cycle.",DAG3.LCA(1, 3),-1);
+		
+		//Chack LCA when there are no common Ancestors
+		LCA_DAG DAG4 = new LCA_DAG(7);
+		DAG4.addEdge(1, 5);
+		DAG4.addEdge(2, 4);
+		DAG4.addEdge(4, 5);
+		DAG4.addEdge(3, 6);
+		assertEquals("Check LCA with no common ancestors.",DAG4.LCA(1, 3),-1);
+		
+		//check when edge is 0
+		LCA_DAG DAG5 = new LCA_DAG(8);
+		DAG5.addEdge(0, 0);
+		assertEquals("Check when edge passed is 0.",DAG5.LCA(1, 3),-1);
 
 	
 	}
