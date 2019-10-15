@@ -33,8 +33,26 @@ class DAGTest {
 		int vertex3 = DAG3.V();
 		assertEquals("Testing V()", 23, vertex3);
 	}
-
 	
+
+	@Test 
+	void TestValidateVertex(){// make sure if vertex is not valid, throw exception
+		LCA_DAG DAG = new LCA_DAG(5);
+		try {
+			DAG.addEdge(-1,-1);
+		} 
+		catch (IllegalArgumentException e) {
+		}
+
+		LCA_DAG DAG2 = new LCA_DAG(3);
+		try {
+			DAG2.addEdge(2,2);
+			DAG2.addEdge(2,1);
+			DAG2.addEdge(1,9);
+		} 
+		catch (IllegalArgumentException e) {
+		}
+	}
 	@Test
 	void testEandAddEdge() {
 		LCA_DAG DAG = new LCA_DAG(4);
