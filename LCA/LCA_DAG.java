@@ -2,111 +2,112 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
+/*
+ * Used Sedgewick and Wayne's Digraph java class
+ */
 public class LCA_DAG {
 	
-	private final int V;
-	private int E;
+	private final int Vertex;
+	private int Edge;
 	private ArrayList<Integer>[] adj;
 	private int[] indegree;
 	public boolean[] marked;
 	public boolean[] stack;
 	public boolean checkDAG;
 
-	public LCA_DAG(int V) {
-		if (V < 0)
+	public LCA_DAG(int Vertex) {
+		if (Vertex < 0)
 			throw new IllegalArgumentException("Number of vertices in a Digraph must be nonnegative");
-		this.V = V;
-		this.E = 0;
-		indegree = new int[V];
-		adj = (ArrayList<Integer>[]) new ArrayList[V];
-		for (int v = 0; v < V; v++) {
-			adj[v] = new ArrayList<Integer>();
+		this.Vertex = Vertex;
+		this.Edge = 0;
+		indegree = new int[Vertex];
+		adj = (ArrayList<Integer>[]) new ArrayList[Vertex];
+		for (int vertex = 0; vertex < Vertex; vertex++) {
+			adj[vertex] = new ArrayList<Integer>();
 
 		}
 		checkDAG = true;
-		marked = new boolean[V];
-		stack = new boolean[V];
+		marked = new boolean[Vertex];
+		stack = new boolean[Vertex];
 	}
 
 	
-	public int V() {
-		return V;
+	public int Vertex() {
+		return Vertex;
 	}
 
 	
-	public int E() {
-		return E;
+	public int Edge() {
+		return Edge;
 	}
 
 	
-	public void addEdge(int v, int w) {
-		validateVertex(v);
-		validateVertex(w);
-		adj[v].add(w);
-		indegree[w]++;
-		E++;
+	public void addEdge(int vertex1, int vertex2) {
+		validateVertex(vertex1);
+		validateVertex(vertex2);
+		adj[vertex1].add(vertex2);
+		indegree[vertex2]++;
+		Edge++;
 	}
 
-	private void validateVertex(int v) {
-		if (v < 0 || v >= V)
-			throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+	private void validateVertex(int vertex) {
+		if (vertex < 0 || vertex >= Vertex)
+			throw new IllegalArgumentException("vertex " + vertex + " is not between 0 and " + (Vertex - 1));
 
 	}
 
-	public Iterable<Integer> adj(int v) {
-		validateVertex(v);
-		return adj[v];
+	public Iterable<Integer> adj(int vertex) {
+		validateVertex(vertex);
+		return adj[vertex];
 	}
 
 	public void isAcyclic() {
-		for (int i = 0; i < V() && checkDAG; i++) {
-			stack = new boolean[V];
-			marked = new boolean[V];
+		for (int i = 0; i < Vertex() && checkDAG; i++) {
+			stack = new boolean[Vertex];
+			marked = new boolean[Vertex];
 			acyclic(i);
 		}
 	}
 
-	private void acyclic(int v) {
-		stack[v] = true;
-		marked[v] = true;
+	private void acyclic(int vertex) {
+		stack[vertex] = true;
+		marked[vertex] = true;
 
-		for (int w : adj(v)) {
-			if (!marked[w]) {
-				acyclic(w);
-			} else if (stack[w]) {
+		for (int vertex2 : adj(vertex)) {
+			if (!marked[vertex2]) {
+				acyclic(vertex2);
+			} else if (stack[vertex2]) {
 				checkDAG = false;
 				return;
 			}
 		}
-		stack[v] = false;
+		stack[vertex] = false;
 	}
 
 	public LCA_DAG reverse() {
-		LCA_DAG reverse = new LCA_DAG(V);
-		for (int v = 0; v < V; v++) {
+		LCA_DAG reverse = new LCA_DAG(Vertex);
+		for (int vertex = 0; vertex < Vertex; vertex++) {
 
-			for (int w : adj(v)) {
-				reverse.addEdge(w, v);
+			for (int vertex2 : adj(vertex)) {
+				reverse.addEdge(vertex2, vertex);
 			}
 		}
 		return reverse;
 	}
 
-	public int LCA(int v, int w) {
-		
-		if (!checkDAG || E == 0) {
+	public int LCA(int vertex, int vertex2) {		
+		if (Edge == 0) {
 			return -1;
 		}
 		boolean hasCommonAncestor = false;
-		validateVertex(v);
-		validateVertex(w);
+		validateVertex(vertex);
+		validateVertex(vertex2);
 
 		LCA_DAG reversed = this.reverse();
 		ArrayList<Integer> commonAncestors = new ArrayList<Integer>();
 
-		ArrayList<Integer> search1 = reversed.BFS(v);
-		ArrayList<Integer> search2 = reversed.BFS(w);
+		ArrayList<Integer> search1 = reversed.BFS(vertex);
+		ArrayList<Integer> search2 = reversed.BFS(vertex2);
 
 		for (int i = 0; i < search1.size(); i++) {
 			for (int t = 0; t < search2.size(); t++) {
@@ -125,7 +126,7 @@ public class LCA_DAG {
 	}
 
 	private ArrayList<Integer> BFS(int s) {
-		boolean visited[] = new boolean[V];
+		boolean visited[] = new boolean[Vertex];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		ArrayList<Integer> result = new ArrayList<Integer>();
 
