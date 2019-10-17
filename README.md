@@ -4,7 +4,7 @@ junior soph module
 
 Programs based on  Lowest Common Ancestor(LCA) algorithm and enhancing solution the implementation to word with grapgs in directed acyclic form (DAGS).My main focus for these was to f0cus on the retsing of the code by creating JUNIT tests for possible error cases to make sure all scenarios are handled sufficiently. For LCA I sourced code from GEEKS4GEEKS and for DAG my solution is based off of Sedgewick and Waynes concept of DAG
 
-master branch contains LCA folder containing:
+# master branch contains LCA folder containing:
 
 -LowestCommonAncestor.java file with code for LCA program
 
@@ -18,7 +18,7 @@ master branch contains LCA folder containing:
 
 
 
-DAG branch contains LCA folder containing:
+# DAG branch contains LCA folder containing:
 
 -Older version of LowestCommonAncestorTest.java and LowestCommonAncestor.java files
 
