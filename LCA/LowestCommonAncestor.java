@@ -1,13 +1,7 @@
+//sourced from GEEKS4GEEKS
 import java.util.ArrayList;
 import java.util.List;
  
-
-
-
-
-
-
-
 
 class Node {
     int val;
@@ -34,8 +28,6 @@ public class LowestCommonAncestor
     private int findLCAInternal(Node root, int n1, int n2) {
  
         if (!findPath(root, n1, path1) || !findPath(root, n2, path2)) {
-           // System.out.println((path1.size() > 0) ? "n1 is present" : "n1 is missing");
-            //System.out.println((path2.size() > 0) ? "n2 is present" : "n2 is missing");
             return -1;
         }
  
@@ -75,59 +67,8 @@ public class LowestCommonAncestor
 
     public static int computeLCA(int a, int b, LowestCommonAncestor bst)
     {
-    	int lca = bst.findLCA(a,b);
-    	System.out.print("LCA(" + a + "," + b + ")=" + lca);
-    	
+    	int lca = bst.findLCA(a,b);    	
     	return lca;
     }
-     
- 
-    
-    static void print2DUtil(Node root, int space)  
-    {  
-        if (root == null)  
-            return;  
-      
-        space += 3;  
-      
-        print2DUtil(root.right, space);  
-      
-        System.out.print("\n");  
-        for (int i = 3; i < space; i++)  
-            System.out.print(" ");  
-        System.out.print(root.val + "\n");  
-      
-        print2DUtil(root.left, space);  
-    }  
-      
-    
-    static void print2D(Node root)  
-    {  
-        print2DUtil(root, 0);  
-    }  
-    
-    
-    
-    public static void main(String args[])  
-    {  
-        Node root = new Node(1);  
-        root.left = new Node(2);  
-        root.right = new Node(3);  
-      
-        root.left.left = new Node(4);  
-        root.left.right = new Node(5);  
-        root.right.left = new Node(6);  
-        root.right.right = new Node(7);  
-      
-        root.left.left.left = new Node(8);  
-        root.left.left.right = new Node(9);  
-        root.left.right.left = new Node(10);  
-        root.left.right.right = new Node(11);  
-        root.right.left.left = new Node(12);  
-        root.right.left.right = new Node(13);  
-        root.right.right.left = new Node(14);  
-        root.right.right.right = new Node(15);  
-          
-        print2D(root);  
-    } 
+
 }
